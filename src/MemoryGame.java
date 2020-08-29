@@ -23,19 +23,14 @@ public class MemoryGame {
             int firstIndex = Integer.parseInt(token[0]);
             int secondIndex = Integer.parseInt(token[1]);
 
-            if (firstIndex == secondIndex || firstIndex < 0 || firstIndex >= startSequence.size() || secondIndex < 0 || secondIndex >= startSequence.size()){
-                String elementForAdding = "-" + numberOfMoving + "a";
-                int indexForAdding = startSequence.size() / 2;
-                startSequence.add(indexForAdding, elementForAdding);
-                startSequence.add(indexForAdding, elementForAdding);
-                System.out.println("Invalid input! Adding additional elements to the board");
+            if (checkForValidIndexes(startSequence, firstIndex, secondIndex)){
+
+                invalidIndexes(startSequence, numberOfMoving);
+
             } else if (startSequence.get(firstIndex).equals(startSequence.get(secondIndex))){
-                String elementForRemoving = startSequence.get(firstIndex);
-                int firstIndexForRemoving = Math.max(firstIndex, secondIndex);
-                int secondIndexForRemoving = Math.min(firstIndex, secondIndex);
-                startSequence.remove(firstIndexForRemoving);
-                startSequence.remove(secondIndexForRemoving);
-                System.out.println(String.format("Congrats! You have found matching elements - %s!", elementForRemoving));
+
+                removeElements(startSequence, firstIndex, secondIndex);
+
             }else if(!startSequence.get(firstIndex).equals(startSequence.get(secondIndex))){
                 System.out.println("Try again!");
             }
@@ -54,5 +49,36 @@ public class MemoryGame {
             System.out.println(startSequence.toString().replaceAll("[\\[\\],]", ""));
         }
 
+    }
+
+    public static boolean checkForValidIndexes(List<String> sequence, int firstIndex, int secondIndex){
+        boolean isNotValid = false;
+        if (firstIndex == secondIndex){
+            isNotValid = true;
+        }else if (firstIndex < 0 || firstIndex >= sequence.size()){
+            isNotValid = true;
+        }else if (secondIndex < 0 || secondIndex >= sequence.size()){
+            isNotValid = true;
+        }
+
+        return isNotValid;
+
+    }
+
+    public static void invalidIndexes (List<String> sequence, int numberOfMoving){
+        String elementForAdding = "-" + numberOfMoving + "a";
+        int indexForAdding = sequence.size() / 2;
+        sequence.add(indexForAdding, elementForAdding);
+        sequence.add(indexForAdding, elementForAdding);
+        System.out.println("Invalid input! Adding additional elements to the board");
+    }
+
+    public static void removeElements(List<String> sequence, int firstIndex, int secondIndex){
+        String elementForRemoving = sequence.get(firstIndex);
+        int firstIndexForRemoving = Math.max(firstIndex, secondIndex);
+        int secondIndexForRemoving = Math.min(firstIndex, secondIndex);
+        sequence.remove(firstIndexForRemoving);
+        sequence.remove(secondIndexForRemoving);
+        System.out.println(String.format("Congrats! You have found matching elements - %s!", elementForRemoving));
     }
 }
