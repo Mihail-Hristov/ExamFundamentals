@@ -22,7 +22,9 @@ public class DataTypeFinder {
             Matcher matcherForDigit = patternForDigit.matcher(input);
             Matcher matcherForFloating = patternForFloating.matcher(input);
             Matcher matcherForChar = patternForChar.matcher(input);
+
             String lowerInput = input.toLowerCase();
+
             if (matcherForDigit.find()){
                 System.out.println(String.format("%s is integer type", input));
             }else if (matcherForFloating.find()){
